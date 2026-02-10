@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  app:
+    image: sanjuktasarkar172/devops_project:latest
+    container_name: my_app_compose
+    ports:
+      - "8085:8080"
+	

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java Full Stack App</title>
+</head>
+<body>
+    <h1>Java Frontend-Backend Demo</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button onclick="fetchGreeting()">Greet Me!</button>
+    <p id="responseText"></p>
+
+    <script>
+        async function fetchGreeting() {
+            const name = document.getElementById('nameInput').value;
+            // Fetch API calls the backend endpoint
+            const response = await fetch(`/api/greet?name=${name}`);
+            const text = await response.text();
+            document.getElementById('responseText').innerText = text;
+        }
+    </script>
+    <script>
+    async function saveUser() {
+        const name = document.getElementById('nameInput').value;
+        await fetch('/api/users', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ name: name })
+        });
+        alert("User saved to SQL database!");
+    }
+	</script>
+	<input id="nameInput"><button onclick="saveUser()">Save</button>
+    
+</body>
+</html>
