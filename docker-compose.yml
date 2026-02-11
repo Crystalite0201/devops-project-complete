@@ -1,12 +1,9 @@
 version: "3.8"
 
 services:
-  springboot-app:
-    image: springboot-app
-    container_name: springboot_app
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app:
+    image: sanjuktasarkar172/devops_project:latest
+    container_name: springboot-app
     ports:
-      - "8089:8080"
-    restart: always
+      - "8085:8080"
+    restart: unless-stopped
