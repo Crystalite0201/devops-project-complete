@@ -1,9 +1,12 @@
 version: "3.8"
 
 services:
-  app:
-    image: sanjuktasarkar172/devops_project:latest
-    container_name: my_app_compose
+  springboot-app:
+    image: springboot-app
+    container_name: springboot_app
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8085:8080"
-	
+      - "8089:8080"
+    restart: always
