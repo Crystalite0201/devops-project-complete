@@ -1,7 +1,14 @@
 pipeline {
     agent any
 
+    environment {
+        EC2_USER = "ubuntu"
+        EC2_IP   = "<EC2_PUBLIC_IP>"
+        IMAGE    = "sanjuktasarkar172/devops_project:latest"
+    }
+
     stages {
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -15,9 +22,17 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build & Deploy on EC2') {
             steps {
-                bat 'docker build -t springboot-app:latest .'
+                sshagent(['ec2-ssh-key']) {
+                    bat """
+                    ssh -o StrictHostKeyChecking=no %EC2_USER%@%EC2_IP% ^
+                    "docker pull %IMAGE% && \
+                     docker stop app || true && \
+                     docker rm app || true && \
+                     docker run -d -p 8089:8080 --name app %IMAGE%"
+                    """
+                }
             }
         }
     }
