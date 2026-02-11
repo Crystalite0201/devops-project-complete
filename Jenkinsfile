@@ -45,18 +45,5 @@ pipeline {
                 bat "docker push %IMAGE%"
             }
         }
-        stage('Deploy on EC2') {
-            steps {
-                sshagent(['ec2-ssh-key']) {
-                    bat '''
-                    ssh -o StrictHostKeyChecking=no %EC2_USER%@%EC2_IP% ^
-                    "docker pull %IMAGE% && \
-                     docker stop app || true && \
-                     docker rm app || true && \
-                     docker run -d -p 8089:8080 --name app %IMAGE%"
-                    '''
-                }
-            }
-        }
     }
 }
