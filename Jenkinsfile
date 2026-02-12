@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         EC2_USER = "ubuntu"
-        EC2_IP   = "51.20.232.207"
         IMAGE    = "sanjuktasarkar172/devops_project:latest"
     }
 
